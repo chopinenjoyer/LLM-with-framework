@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import json
+import re
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
+from difflib import SequenceMatcher
 
 import numpy as np
 import torch
@@ -13,6 +16,59 @@ from tokenizer import ByteTokenizer
 
 def prompt_from_instruction(instruction: str) -> str:
     return f"### Instruction:\n{instruction.strip()}\n\n### Response:\n"
+
+
+def normalize_instruction_text(text: str) -> str:
+    text = unicodedata.normalize("NFKD", text.lower())
+    text = "".join(ch for ch in text if unicodedata.category(ch) != "Mn")
+    text = text.replace("'", " ")
+    text = re.sub(r"[^a-z0-9\s]", " ", text)
+    text = re.sub(r"\bcapital\b", "capitale", text)
+    text = re.sub(r"\bquelle jour\b", "quel jour", text)
+    text = re.sub(r"\bquelle mois\b", "quel mois", text)
+    text = re.sub(r"\bquelle animal\b", "quel animal", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
+
+
+def instruction_similarity(a: str, b: str) -> float:
+    tokens_a = set(normalize_instruction_text(a).split())
+    tokens_b = set(normalize_instruction_text(b).split())
+    if not tokens_a or not tokens_b:
+        return 0.0
+    jaccard = len(tokens_a & tokens_b) / len(tokens_a | tokens_b)
+    ratio = SequenceMatcher(None, normalize_instruction_text(a), normalize_instruction_text(b)).ratio()
+    return 0.7 * jaccard + 0.3 * ratio
+
+
+def normalize_capital_subject_tokens(tokens: list[str], start: int = 0) -> str | None:
+    while start < len(tokens) and tokens[start] in {"de", "du", "des", "d", "la", "le", "les", "l"}:
+        start += 1
+    subject_tokens = tokens[start:]
+    if not subject_tokens:
+        return None
+    return " ".join(subject_tokens)
+
+
+def extract_capital_subject(text: str) -> str | None:
+    tokens = normalize_instruction_text(text).split()
+    if "capitale" not in tokens:
+        return None
+    start = tokens.index("capitale") + 1
+    return normalize_capital_subject_tokens(tokens, start)
+
+
+@dataclass
+class ParsedCapitalResponse:
+    country_phrase: str
+    capital: str
+
+
+def parse_capital_response(response: str) -> ParsedCapitalResponse | None:
+    match = re.match(r"^\s*La capitale (.+) est ([^.]+)\.?\s*$", response)
+    if not match:
+        return None
+    return ParsedCapitalResponse(country_phrase=match.group(1).strip(), capital=match.group(2).strip())
 
 
 def load_text_files(paths: list[str]) -> list[str]:

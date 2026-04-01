@@ -1,6 +1,6 @@
 {
   "stage": "sft",
-  "epochs": 30,
+  "epochs": 60,
   "batch_size": 4,
   "source_checkpoint": "artifacts/pretrained_model.pt"
 }

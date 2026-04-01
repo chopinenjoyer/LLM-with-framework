@@ -9,7 +9,15 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-from data_utils import PackedTokenDataset, SFTDataset, collate_sft, load_instruction_jsonl, prompt_from_instruction
+from data_utils import (
+    PackedTokenDataset,
+    SFTDataset,
+    ShardedPackedTokenDataset,
+    collate_sft,
+    load_instruction_jsonl,
+    load_shard_manifest,
+    prompt_from_instruction,
+)
 from model import DecoderOnlyLM, LLMConfig
 from tokenizer import ByteTokenizer
 
@@ -21,6 +29,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--max-new-tokens", type=int, default=96)
     parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument("--top-k", type=int, default=50)
+    parser.add_argument("--top-p", type=float, default=0.9)
+    parser.add_argument("--repetition-penalty", type=float, default=1.2)
     return parser.parse_args()
 
 
@@ -39,8 +50,13 @@ def normalize_text(text: str) -> str:
 
 
 def evaluate_perplexity(model: DecoderOnlyLM, data_dir: Path, batch_size: int) -> float:
-    val_tokens = np.load(data_dir / "pretrain_val.npy")
-    dataset = PackedTokenDataset(val_tokens, block_size=model.config.block_size)
+    manifest_path = data_dir / "pretrain_manifest.json"
+    if manifest_path.exists():
+        manifest = load_shard_manifest(manifest_path)
+        dataset = ShardedPackedTokenDataset(manifest["val_shards"], block_size=model.config.block_size)
+    else:
+        val_tokens = np.load(data_dir / "pretrain_val.npy")
+        dataset = PackedTokenDataset(val_tokens, block_size=model.config.block_size)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
     losses: list[float] = []
     with torch.no_grad():
@@ -69,6 +85,9 @@ def generate_response(
     instruction: str,
     max_new_tokens: int,
     temperature: float,
+    top_k: int,
+    top_p: float,
+    repetition_penalty: float,
 ) -> str:
     prompt = prompt_from_instruction(instruction)
     input_ids = torch.tensor([tokenizer.encode(prompt, add_bos=True, add_eos=False)], dtype=torch.long)
@@ -77,11 +96,17 @@ def generate_response(
             input_ids,
             max_new_tokens=max_new_tokens,
             temperature=temperature,
-            top_k=None if temperature <= 0 else 50,
+            top_k=None if temperature <= 0 else top_k,
+            top_p=top_p,
+            repetition_penalty=repetition_penalty,
             eos_token_id=tokenizer.spec.eos_token_id,
         )
     response_ids = generated[0].tolist()[input_ids.size(1) :]
-    return tokenizer.decode(response_ids).strip()
+    response = tokenizer.decode(response_ids).strip()
+    compact = response.replace(" ", "")
+    if compact and len(compact) >= 12 and len(set(compact)) <= 2:
+        return ""
+    return response
 
 
 def evaluate_exact_match(
@@ -90,11 +115,23 @@ def evaluate_exact_match(
     validation_path: Path,
     max_new_tokens: int,
     temperature: float,
+    top_k: int,
+    top_p: float,
+    repetition_penalty: float,
 ) -> float:
     examples = load_instruction_jsonl(validation_path)
     correct = 0
     for example in examples:
-        prediction = generate_response(model, tokenizer, example.instruction, max_new_tokens, temperature)
+        prediction = generate_response(
+            model,
+            tokenizer,
+            example.instruction,
+            max_new_tokens,
+            temperature,
+            top_k,
+            top_p,
+            repetition_penalty,
+        )
         if normalize_text(prediction) == normalize_text(example.response):
             correct += 1
     return correct / max(len(examples), 1)
@@ -112,6 +149,9 @@ def main() -> None:
         Path("data/instructions_val.jsonl"),
         args.max_new_tokens,
         args.temperature,
+        args.top_k,
+        args.top_p,
+        args.repetition_penalty,
     )
     print(f"pretrain_perplexity={ppl:.4f}")
     print(f"sft_val_loss={sft_loss:.4f}")

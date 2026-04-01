@@ -101,7 +101,7 @@ class DecoderOnlyLM(nn.Module):
             nn.init.normal_(module.weight, mean=0.0, std=0.02)
 
     def forward(self, input_ids: torch.Tensor, labels: torch.Tensor | None = None) -> tuple[torch.Tensor, torch.Tensor | None]:
-        batch_size, seq_len = input_ids.shape
+        _, seq_len = input_ids.shape
         if seq_len > self.config.block_size:
             raise ValueError("Sequence length exceeds block_size")
 
@@ -115,10 +115,12 @@ class DecoderOnlyLM(nn.Module):
 
         loss = None
         if labels is not None:
-            flat_labels = labels.reshape(-1)
+            shift_logits = logits[:, :-1, :].contiguous()
+            shift_labels = labels[:, 1:].contiguous()
+            flat_labels = shift_labels.reshape(-1)
             if bool(flat_labels.ne(-100).any()):
                 loss = F.cross_entropy(
-                    logits.reshape(-1, logits.size(-1)),
+                    shift_logits.reshape(-1, shift_logits.size(-1)),
                     flat_labels,
                     ignore_index=-100,
                 )
@@ -132,12 +134,22 @@ class DecoderOnlyLM(nn.Module):
         max_new_tokens: int,
         temperature: float = 0.8,
         top_k: int | None = 50,
+        top_p: float = 1.0,
+        repetition_penalty: float = 1.0,
+        repetition_window: int = 128,
+        max_consecutive_repeats: int = 24,
         eos_token_id: int | None = None,
     ) -> torch.Tensor:
+        repeat_counts = torch.ones((input_ids.size(0), 1), dtype=torch.long, device=input_ids.device)
         for _ in range(max_new_tokens):
             idx = input_ids[:, -self.config.block_size :]
             logits, _ = self(idx)
             logits = logits[:, -1, :]
+            if repetition_penalty > 1.0:
+                window_tokens = idx[:, -min(idx.size(1), repetition_window) :]
+                for batch_idx in range(window_tokens.size(0)):
+                    seen_tokens = torch.unique(window_tokens[batch_idx])
+                    logits[batch_idx, seen_tokens] = logits[batch_idx, seen_tokens] / repetition_penalty
             if temperature <= 0:
                 next_token = logits.argmax(dim=-1, keepdim=True)
             else:
@@ -145,9 +157,23 @@ class DecoderOnlyLM(nn.Module):
                 if top_k is not None and top_k < logits.size(-1):
                     values, _ = torch.topk(logits, top_k)
                     logits = logits.masked_fill(logits < values[:, [-1]], float("-inf"))
+                if top_p < 1.0:
+                    sorted_logits, sorted_indices = torch.sort(logits, descending=True, dim=-1)
+                    sorted_probs = F.softmax(sorted_logits, dim=-1)
+                    cumulative_probs = torch.cumsum(sorted_probs, dim=-1)
+                    sorted_mask = cumulative_probs > top_p
+                    sorted_mask[:, 1:] = sorted_mask[:, :-1].clone()
+                    sorted_mask[:, 0] = False
+                    removal_mask = torch.zeros_like(logits, dtype=torch.bool)
+                    removal_mask.scatter_(1, sorted_indices, sorted_mask)
+                    logits = logits.masked_fill(removal_mask, float("-inf"))
                 probs = F.softmax(logits, dim=-1)
                 next_token = torch.multinomial(probs, num_samples=1)
+            same_as_previous = next_token.eq(input_ids[:, -1:])
+            repeat_counts = torch.where(same_as_previous, repeat_counts + 1, torch.ones_like(repeat_counts))
             input_ids = torch.cat([input_ids, next_token], dim=1)
             if eos_token_id is not None and bool((next_token == eos_token_id).all()):
+                break
+            if bool((repeat_counts >= max_consecutive_repeats).all()):
                 break
         return input_ids

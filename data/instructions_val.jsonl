@@ -1,3 +1,10 @@
-{"instruction":"Quelle planete tourne autour du Soleil avec la vie connue ?","response":"La Terre tourne autour du Soleil et abrite la vie connue."}
-{"instruction":"Que faut-il au corps humain pour bien fonctionner ?","response":"Le corps humain a besoin d'eau, de sommeil et d'une alimentation equilibree."}
-{"instruction":"Quel jour vient apres vendredi ?","response":"Le jour qui vient apres vendredi est samedi."}
+{"instruction":"Quelle est la capitale du Japon ?","response":"La capitale du Japon est Tokyo."}
+{"instruction":"Quelle est la capitale du Canada ?","response":"La capitale du Canada est Ottawa."}
+{"instruction":"Quel jour vient apres lundi ?","response":"Le jour qui vient apres lundi est mardi."}
+{"instruction":"Combien font 6 fois 7 ?","response":"6 fois 7 font 42."}
+{"instruction":"Que signifie RAM ?","response":"RAM signifie Random Access Memory, ou memoire vive."}
+{"instruction":"Qu'est-ce qu'un navigateur web ?","response":"Un navigateur web est un logiciel qui permet d'afficher et de consulter des pages web."}
+{"instruction":"Pourquoi faire des sauvegardes ?","response":"Faire des sauvegardes permet de proteger ses donnees contre la perte ou la corruption."}
+{"instruction":"A quoi sert le fine-tuning ?","response":"Le fine-tuning adapte un modele a une tache ou a un domaine plus precis."}
+{"instruction":"Qu'est-ce qu'un token dans un modele de langage ?","response":"Un token est une unite de texte traitee par le modele."}
+{"instruction":"Quel est le plus haut sommet du monde ?","response":"Le plus haut sommet du monde est l'Everest."}

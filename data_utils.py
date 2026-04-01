@@ -27,6 +27,10 @@ def load_text_files(paths: list[str]) -> list[str]:
     return texts
 
 
+def load_shard_manifest(path: str | Path) -> dict[str, object]:
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
 @dataclass
 class InstructionExample:
     instruction: str
@@ -60,7 +64,39 @@ class PackedTokenDataset(Dataset):
             pad = np.full(self.block_size + 1 - len(chunk), fill_value=0, dtype=np.int64)
             chunk = np.concatenate([chunk, pad])
         x = torch.tensor(chunk[:-1], dtype=torch.long)
-        y = torch.tensor(chunk[1:], dtype=torch.long)
+        y = torch.tensor(chunk[:-1], dtype=torch.long)
+        return x, y
+
+
+class ShardedPackedTokenDataset(Dataset):
+    def __init__(self, shard_paths: list[str], block_size: int) -> None:
+        if not shard_paths:
+            raise ValueError("At least one shard is required")
+        self.block_size = block_size
+        self.shard_paths = [str(path) for path in shard_paths]
+        self.shards = [np.load(path, mmap_mode="r") for path in self.shard_paths]
+        self.items_per_shard: list[int] = []
+        for shard in self.shards:
+            num_items = max(1, (max(len(shard) - 1, 1) + block_size - 1) // block_size)
+            self.items_per_shard.append(num_items)
+        self.cumulative_items = np.cumsum(self.items_per_shard)
+
+    def __len__(self) -> int:
+        return int(self.cumulative_items[-1])
+
+    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:
+        shard_idx = int(np.searchsorted(self.cumulative_items, idx, side="right"))
+        previous = 0 if shard_idx == 0 else int(self.cumulative_items[shard_idx - 1])
+        local_idx = idx - previous
+        shard = self.shards[shard_idx]
+        start = local_idx * self.block_size
+        end = start + self.block_size + 1
+        chunk = shard[start:end]
+        if len(chunk) < self.block_size + 1:
+            pad = np.full(self.block_size + 1 - len(chunk), fill_value=0, dtype=np.int64)
+            chunk = np.concatenate([chunk, pad])
+        x = torch.tensor(chunk[:-1], dtype=torch.long)
+        y = torch.tensor(chunk[:-1], dtype=torch.long)
         return x, y
 
 

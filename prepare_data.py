@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 import numpy as np
@@ -17,7 +18,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--sft-val", default="data/instructions_val.jsonl")
     parser.add_argument("--output-dir", default="artifacts/datasets")
     parser.add_argument("--pretrain-val-ratio", type=float, default=0.05)
+    parser.add_argument("--train-shard-size", type=int, default=200000)
+    parser.add_argument("--val-shard-size", type=int, default=50000)
     return parser.parse_args()
+
+
+def write_shards(tokens: np.ndarray, shard_dir: Path, prefix: str, shard_size: int) -> list[str]:
+    shard_dir.mkdir(parents=True, exist_ok=True)
+    shard_paths: list[str] = []
+    for shard_idx, start in enumerate(range(0, len(tokens), shard_size)):
+        end = min(start + shard_size, len(tokens))
+        shard_path = shard_dir / f"{prefix}_{shard_idx:05d}.npy"
+        np.save(shard_path, tokens[start:end])
+        shard_paths.append(str(shard_path))
+    if not shard_paths:
+        shard_path = shard_dir / f"{prefix}_00000.npy"
+        np.save(shard_path, tokens)
+        shard_paths.append(str(shard_path))
+    return shard_paths
 
 
 def main() -> None:
@@ -40,9 +58,15 @@ def main() -> None:
     val_array = pretrain_array[split_index:]
     if len(val_array) < 2:
         val_array = train_array[-max(2, len(train_array) // 20) :]
-
-    np.save(output_dir / "pretrain_train.npy", train_array)
-    np.save(output_dir / "pretrain_val.npy", val_array)
+    train_shards = write_shards(train_array, output_dir / "pretrain_train_shards", "train", args.train_shard_size)
+    val_shards = write_shards(val_array, output_dir / "pretrain_val_shards", "val", args.val_shard_size)
+    manifest = {
+        "train_shards": train_shards,
+        "val_shards": val_shards,
+        "train_tokens": int(len(train_array)),
+        "val_tokens": int(len(val_array)),
+    }
+    (output_dir / "pretrain_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
     sft_train_examples = load_instruction_jsonl(args.sft_train)
     sft_val_examples = load_instruction_jsonl(args.sft_val)
@@ -54,6 +78,7 @@ def main() -> None:
 
     summary = (
         f"Prepared pretrain tokens: train={len(train_array)} val={len(val_array)}\n"
+        f"Pretrain shards: train={len(train_shards)} val={len(val_shards)}\n"
         f"Prepared SFT examples: train={len(sft_train_items)} val={len(sft_val_items)}\n"
         f"Tokenizer saved to {tokenizer_path}"
     )

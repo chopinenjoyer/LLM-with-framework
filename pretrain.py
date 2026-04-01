@@ -7,7 +7,7 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-from data_utils import PackedTokenDataset
+from data_utils import PackedTokenDataset, ShardedPackedTokenDataset, load_shard_manifest
 from model import DecoderOnlyLM, LLMConfig
 from training_utils import ManualAdamW, save_checkpoint, save_json
 
@@ -43,11 +43,20 @@ def evaluate_loss(model: DecoderOnlyLM, dataloader: DataLoader) -> float:
 def main() -> None:
     args = parse_args()
     data_dir = Path(args.data_dir)
-    train_tokens = np.load(data_dir / "pretrain_train.npy")
-    val_tokens = np.load(data_dir / "pretrain_val.npy")
-
-    train_dataset = PackedTokenDataset(train_tokens, block_size=args.block_size)
-    val_dataset = PackedTokenDataset(val_tokens, block_size=args.block_size)
+    manifest_path = data_dir / "pretrain_manifest.json"
+    if manifest_path.exists():
+        manifest = load_shard_manifest(manifest_path)
+        train_dataset = ShardedPackedTokenDataset(manifest["train_shards"], block_size=args.block_size)
+        val_dataset = ShardedPackedTokenDataset(manifest["val_shards"], block_size=args.block_size)
+        train_tokens_count = int(manifest["train_tokens"])
+        val_tokens_count = int(manifest["val_tokens"])
+    else:
+        train_tokens = np.load(data_dir / "pretrain_train.npy")
+        val_tokens = np.load(data_dir / "pretrain_val.npy")
+        train_dataset = PackedTokenDataset(train_tokens, block_size=args.block_size)
+        val_dataset = PackedTokenDataset(val_tokens, block_size=args.block_size)
+        train_tokens_count = int(len(train_tokens))
+        val_tokens_count = int(len(val_tokens))
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
 
@@ -90,8 +99,8 @@ def main() -> None:
         output_path.with_suffix(".json"),
         {
             "stage": "pretrain",
-            "train_tokens": int(len(train_tokens)),
-            "val_tokens": int(len(val_tokens)),
+            "train_tokens": train_tokens_count,
+            "val_tokens": val_tokens_count,
             "epochs": args.epochs,
             "batch_size": args.batch_size,
             "block_size": args.block_size,

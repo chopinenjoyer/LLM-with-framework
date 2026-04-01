@@ -1,0 +1,6 @@
+{
+  "stage": "sft",
+  "epochs": 1,
+  "batch_size": 2,
+  "source_checkpoint": "artifacts/pretrained_smoke.pt"
+}

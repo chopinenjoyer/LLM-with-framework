@@ -1,13 +1,13 @@
 # LLM-with-framework
 
-Mini projet PyTorch pour repondre a des questions simples en francais.
+Pipeline PyTorch pour construire un petit LLM from scratch.
 
-Ce projet ne construit pas un vrai LLM generaliste. Il entraine un petit modele Transformer de classification qui associe une question a une reponse connue. C'est une bonne premiere etape pour comprendre:
+Le depot couvre maintenant quatre etapes:
 
-- la preparation d'un dataset
-- la tokenisation simple
-- l'entrainement d'un modele PyTorch
-- l'inference en ligne de commande
+- preparation des donnees
+- preentrainement auto-regressif
+- fine-tuning supervise
+- evaluation et inference
 
 ## Installation
 
@@ -17,37 +17,76 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-`requirements.txt` force l'installation de la version CPU de PyTorch, suffisante pour ce mini projet.
-
-## Entrainer le modele
+## 1. Preparer les donnees
 
 ```bash
-python train.py
+python prepare_data.py
 ```
 
-Le modele entraine est sauve dans `artifacts/qa_model.pt`.
+Les fichiers prepares seront ecrits dans `artifacts/datasets`.
 
-## Poser une question
+## 2. Preentrainer le modele
 
 ```bash
-python chat.py --question "Quelle est la capitale de la France ?"
+python pretrain.py --data-dir artifacts/datasets --output artifacts/pretrained_model.pt
 ```
 
-Mode interactif:
+## 3. Fine-tuner le modele
 
 ```bash
-python chat.py
+python finetune.py --data-dir artifacts/datasets --checkpoint artifacts/pretrained_model.pt --output artifacts/sft_model.pt
 ```
 
-## Structure
+## 4. Evaluer
 
-- `data/qa_dataset.json`: questions/reponses d'exemple
-- `model.py`: vocabulaire, normalisation et modele Transformer
-- `train.py`: entrainement
-- `chat.py`: inference
+```bash
+python evaluate.py --data-dir artifacts/datasets --checkpoint artifacts/sft_model.pt
+```
 
-## Limites
+## 5. Discuter avec le modele
 
-- Le modele ne sait repondre qu'aux themes presents dans le dataset.
-- Si tu veux un vrai assistant plus general, il faudra beaucoup plus de donnees et un modele bien plus gros.
-- Pour progresser ensuite, la prochaine etape logique serait de remplacer la classification par un modele sequence-to-sequence ou d'utiliser un modele pre-entraine.
+```bash
+python chat.py --checkpoint artifacts/sft_model.pt
+```
+
+Question unique:
+
+```bash
+python chat.py --checkpoint artifacts/sft_model.pt --question "Quel jour vient apres jeudi ?"
+```
+
+## Fichiers principaux
+
+- `tokenizer.py`: tokenizer byte-level
+- `model.py`: modele Transformer causal decoder-only
+- `prepare_data.py`: preparation du corpus et du SFT
+- `pretrain.py`: preentrainement next-token prediction
+- `finetune.py`: fine-tuning supervise
+- `evaluate.py`: perplexite et exact match
+- `chat.py`: inference interactive
+
+## Formats de donnees
+
+Corpus brut:
+
+```text
+Une ligne ou plusieurs paragraphes de texte libre.
+```
+
+Instruction tuning:
+
+```json
+{"instruction":"Explique la gravite.","response":"La gravite est la force..."}
+```
+
+## Point important
+
+Le pipeline est generaliste dans sa structure, pas dans ses resultats actuels.
+Pour obtenir un modele vraiment utile, il faut:
+
+- un corpus massif et propre
+- beaucoup plus de compute
+- un modele plus grand
+- une evaluation plus riche
+
+Ce depot fournit la base logicielle pour ces etapes, pas un equivalent de ChatGPT local.

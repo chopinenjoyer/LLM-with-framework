@@ -1,7 +1,7 @@
 {
   "dataset": "data/qa_dataset.json",
   "num_examples": 24,
-  "num_answers": 8,
-  "vocab_size": 39,
-  "epochs": 250
+  "vocab_size": 58,
+  "epochs": 60,
+  "architecture": "seq2seq-gru"
 }

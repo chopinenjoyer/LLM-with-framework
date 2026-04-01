@@ -1,92 +1,153 @@
 from __future__ import annotations
 
-import json
-import re
-import unicodedata
-from dataclasses import dataclass
-from pathlib import Path
+from dataclasses import asdict, dataclass
 
 import torch
 from torch import nn
-
-
-def normalize_text(text: str) -> str:
-    text = text.lower().strip()
-    text = unicodedata.normalize("NFD", text)
-    text = "".join(ch for ch in text if unicodedata.category(ch) != "Mn")
-    text = text.replace("'", " ")
-    text = re.sub(r"[^a-z0-9\s]", " ", text)
-    return re.sub(r"\s+", " ", text).strip()
-
-
-class Vocabulary:
-    PAD = "<pad>"
-    UNK = "<unk>"
-
-    def __init__(self) -> None:
-        self.token_to_id = {self.PAD: 0, self.UNK: 1}
-        self.id_to_token = [self.PAD, self.UNK]
-
-    def add_sentence(self, sentence: str) -> None:
-        for token in normalize_text(sentence).split():
-            if token not in self.token_to_id:
-                self.token_to_id[token] = len(self.id_to_token)
-                self.id_to_token.append(token)
-
-    def encode(self, sentence: str, max_length: int) -> list[int]:
-        tokens = normalize_text(sentence).split()[:max_length]
-        ids = [self.token_to_id.get(token, self.token_to_id[self.UNK]) for token in tokens]
-        padding = [self.token_to_id[self.PAD]] * (max_length - len(ids))
-        return ids + padding
-
-    @property
-    def size(self) -> int:
-        return len(self.id_to_token)
-
-
-class QATransformer(nn.Module):
-    def __init__(
-        self,
-        vocab_size: int,
-        num_answers: int,
-        pad_token_id: int,
-        d_model: int = 64,
-        hidden_dim: int = 64,
-        dropout: float = 0.1,
-    ) -> None:
-        super().__init__()
-        self.pad_token_id = pad_token_id
-        self.embedding = nn.Embedding(vocab_size, d_model, padding_idx=pad_token_id)
-        self.classifier = nn.Sequential(
-            nn.Linear(d_model, hidden_dim),
-            nn.ReLU(),
-            nn.Dropout(dropout),
-            nn.Linear(hidden_dim, num_answers),
-        )
-
-    def forward(self, token_ids: torch.Tensor) -> torch.Tensor:
-        padding_mask = token_ids.eq(self.pad_token_id)
-        x = self.embedding(token_ids)
-
-        valid_tokens = (~padding_mask).unsqueeze(-1)
-        pooled = (x * valid_tokens).sum(dim=1) / valid_tokens.sum(dim=1).clamp(min=1)
-        return self.classifier(pooled)
+from torch.nn import functional as F
 
 
 @dataclass
-class TrainingExample:
-    question: str
-    answer_id: int
+class LLMConfig:
+    vocab_size: int = 259
+    block_size: int = 256
+    n_layers: int = 4
+    n_heads: int = 4
+    n_embd: int = 128
+    dropout: float = 0.1
+
+    def to_dict(self) -> dict[str, int | float]:
+        return asdict(self)
 
 
-def load_dataset(dataset_path: str | Path) -> tuple[list[TrainingExample], list[str]]:
-    raw_items = json.loads(Path(dataset_path).read_text(encoding="utf-8"))
-    examples: list[TrainingExample] = []
-    answers: list[str] = []
+class CausalSelfAttention(nn.Module):
+    def __init__(self, config: LLMConfig) -> None:
+        super().__init__()
+        if config.n_embd % config.n_heads != 0:
+            raise ValueError("n_embd must be divisible by n_heads")
+        self.n_heads = config.n_heads
+        self.head_dim = config.n_embd // config.n_heads
+        self.qkv = nn.Linear(config.n_embd, 3 * config.n_embd)
+        self.proj = nn.Linear(config.n_embd, config.n_embd)
+        self.attn_dropout = nn.Dropout(config.dropout)
+        self.resid_dropout = nn.Dropout(config.dropout)
+        mask = torch.tril(torch.ones(config.block_size, config.block_size, dtype=torch.bool))
+        self.register_buffer("mask", mask.view(1, 1, config.block_size, config.block_size), persistent=False)
 
-    for answer_id, item in enumerate(raw_items):
-        answers.append(item["answer"])
-        for question in item["questions"]:
-            examples.append(TrainingExample(question=question, answer_id=answer_id))
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        batch_size, seq_len, emb_dim = x.shape
+        qkv = self.qkv(x)
+        q, k, v = qkv.split(emb_dim, dim=2)
+        q = q.view(batch_size, seq_len, self.n_heads, self.head_dim).transpose(1, 2)
+        k = k.view(batch_size, seq_len, self.n_heads, self.head_dim).transpose(1, 2)
+        v = v.view(batch_size, seq_len, self.n_heads, self.head_dim).transpose(1, 2)
 
-    return examples, answers
+        scores = (q @ k.transpose(-2, -1)) / (self.head_dim ** 0.5)
+        scores = scores.masked_fill(~self.mask[:, :, :seq_len, :seq_len], float("-inf"))
+        weights = F.softmax(scores, dim=-1)
+        weights = self.attn_dropout(weights)
+        y = weights @ v
+        y = y.transpose(1, 2).contiguous().view(batch_size, seq_len, emb_dim)
+        return self.resid_dropout(self.proj(y))
+
+
+class FeedForward(nn.Module):
+    def __init__(self, config: LLMConfig) -> None:
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(config.n_embd, 4 * config.n_embd),
+            nn.GELU(),
+            nn.Linear(4 * config.n_embd, config.n_embd),
+            nn.Dropout(config.dropout),
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return self.net(x)
+
+
+class TransformerBlock(nn.Module):
+    def __init__(self, config: LLMConfig) -> None:
+        super().__init__()
+        self.ln_1 = nn.LayerNorm(config.n_embd)
+        self.attn = CausalSelfAttention(config)
+        self.ln_2 = nn.LayerNorm(config.n_embd)
+        self.ff = FeedForward(config)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = x + self.attn(self.ln_1(x))
+        x = x + self.ff(self.ln_2(x))
+        return x
+
+
+class DecoderOnlyLM(nn.Module):
+    def __init__(self, config: LLMConfig) -> None:
+        super().__init__()
+        self.config = config
+        self.token_embedding = nn.Embedding(config.vocab_size, config.n_embd)
+        self.position_embedding = nn.Embedding(config.block_size, config.n_embd)
+        self.dropout = nn.Dropout(config.dropout)
+        self.blocks = nn.ModuleList([TransformerBlock(config) for _ in range(config.n_layers)])
+        self.ln_f = nn.LayerNorm(config.n_embd)
+        self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
+        self.lm_head.weight = self.token_embedding.weight
+        self.apply(self._init_weights)
+
+    def _init_weights(self, module: nn.Module) -> None:
+        if isinstance(module, nn.Linear):
+            nn.init.normal_(module.weight, mean=0.0, std=0.02)
+            if module.bias is not None:
+                nn.init.zeros_(module.bias)
+        elif isinstance(module, nn.Embedding):
+            nn.init.normal_(module.weight, mean=0.0, std=0.02)
+
+    def forward(self, input_ids: torch.Tensor, labels: torch.Tensor | None = None) -> tuple[torch.Tensor, torch.Tensor | None]:
+        batch_size, seq_len = input_ids.shape
+        if seq_len > self.config.block_size:
+            raise ValueError("Sequence length exceeds block_size")
+
+        positions = torch.arange(0, seq_len, device=input_ids.device, dtype=torch.long).unsqueeze(0)
+        x = self.token_embedding(input_ids) + self.position_embedding(positions)
+        x = self.dropout(x)
+        for block in self.blocks:
+            x = block(x)
+        x = self.ln_f(x)
+        logits = self.lm_head(x)
+
+        loss = None
+        if labels is not None:
+            flat_labels = labels.reshape(-1)
+            if bool(flat_labels.ne(-100).any()):
+                loss = F.cross_entropy(
+                    logits.reshape(-1, logits.size(-1)),
+                    flat_labels,
+                    ignore_index=-100,
+                )
+            else:
+                loss = logits.new_zeros(())
+        return logits, loss
+
+    def generate(
+        self,
+        input_ids: torch.Tensor,
+        max_new_tokens: int,
+        temperature: float = 0.8,
+        top_k: int | None = 50,
+        eos_token_id: int | None = None,
+    ) -> torch.Tensor:
+        for _ in range(max_new_tokens):
+            idx = input_ids[:, -self.config.block_size :]
+            logits, _ = self(idx)
+            logits = logits[:, -1, :]
+            if temperature <= 0:
+                next_token = logits.argmax(dim=-1, keepdim=True)
+            else:
+                logits = logits / temperature
+                if top_k is not None and top_k < logits.size(-1):
+                    values, _ = torch.topk(logits, top_k)
+                    logits = logits.masked_fill(logits < values[:, [-1]], float("-inf"))
+                probs = F.softmax(logits, dim=-1)
+                next_token = torch.multinomial(probs, num_samples=1)
+            input_ids = torch.cat([input_ids, next_token], dim=1)
+            if eos_token_id is not None and bool((next_token == eos_token_id).all()):
+                break
+        return input_ids

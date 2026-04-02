@@ -7,7 +7,8 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from data_utils import build_sft_item, load_instruction_jsonl, load_text_files
+from llm.dataio import load_instruction_jsonl, load_text_files
+from llm.datasets import build_sft_item
 from tokenizer import ByteTokenizer
 
 

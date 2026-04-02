@@ -7,9 +7,12 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-from data_utils import PackedTokenDataset, ShardedPackedTokenDataset, load_shard_manifest
-from model import DecoderOnlyLM, LLMConfig
-from training_utils import ManualAdamW, save_checkpoint, save_json
+from llm.dataio import load_shard_manifest
+from llm.datasets import PackedTokenDataset, ShardedPackedTokenDataset
+from llm.evaluation import evaluate_loss
+from llm.models import DecoderOnlyLM, LLMConfig
+from llm.optim import ManualAdamW
+from llm.serialization import save_checkpoint, save_json
 
 
 def parse_args() -> argparse.Namespace:
@@ -25,20 +28,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--n-embd", type=int, default=128)
     parser.add_argument("--dropout", type=float, default=0.1)
     return parser.parse_args()
-
-
-def evaluate_loss(model: DecoderOnlyLM, dataloader: DataLoader) -> float:
-    model.eval()
-    total_loss = 0.0
-    total_batches = 0
-    with torch.no_grad():
-        for input_ids, labels in dataloader:
-            _, loss = model(input_ids, labels)
-            total_loss += float(loss.item())
-            total_batches += 1
-    model.train()
-    return total_loss / max(total_batches, 1)
-
 
 def main() -> None:
     args = parse_args()

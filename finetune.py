@@ -7,10 +7,13 @@ from pathlib import Path
 import torch
 from torch.utils.data import DataLoader
 
-from data_utils import SFTDataset, collate_sft
-from model import DecoderOnlyLM, LLMConfig
+from llm.checkpoints import load_checkpoint
+from llm.datasets import SFTDataset, collate_sft
+from llm.evaluation import evaluate_loss
+from llm.models import DecoderOnlyLM, LLMConfig
+from llm.optim import ManualAdamW
+from llm.serialization import save_checkpoint, save_json
 from tokenizer import ByteTokenizer
-from training_utils import ManualAdamW, save_checkpoint, save_json
 
 
 def parse_args() -> argparse.Namespace:
@@ -23,29 +26,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--lr", type=float, default=1e-4)
     return parser.parse_args()
 
-
-def evaluate_loss(model: DecoderOnlyLM, dataloader: DataLoader) -> float:
-    model.eval()
-    total_loss = 0.0
-    total_batches = 0
-    with torch.no_grad():
-        for input_ids, labels in dataloader:
-            _, loss = model(input_ids, labels)
-            total_loss += float(loss.item())
-            total_batches += 1
-    model.train()
-    return total_loss / max(total_batches, 1)
-
-
 def main() -> None:
     args = parse_args()
     data_dir = Path(args.data_dir)
-    checkpoint = torch.load(args.checkpoint, map_location="cpu")
-    tokenizer = ByteTokenizer.load(checkpoint["tokenizer_path"])
+    model, tokenizer, checkpoint = load_checkpoint(args.checkpoint)
 
     config = LLMConfig(**checkpoint["model_config"])
-    model = DecoderOnlyLM(config)
-    model.load_state_dict(checkpoint["model_state_dict"])
 
     train_items = torch.load(data_dir / "sft_train.pt", map_location="cpu")
     val_items = torch.load(data_dir / "sft_val.pt", map_location="cpu")

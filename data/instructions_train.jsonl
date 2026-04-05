@@ -1,0 +1,102 @@
+{"instruction":"Quelle est la capitale de la France ?","response":"La capitale de la France est Paris."}
+{"instruction":"Capitale de la France","response":"La capitale de la France est Paris."}
+{"instruction":"C'est quoi la capitale de la France ?","response":"La capitale de la France est Paris."}
+{"instruction":"Quelle est la capitale de l'Allemagne ?","response":"La capitale de l'Allemagne est Berlin."}
+{"instruction":"Capitale de l'Allemagne","response":"La capitale de l'Allemagne est Berlin."}
+{"instruction":"Quelle est la capitale de l'Italie ?","response":"La capitale de l'Italie est Rome."}
+{"instruction":"Quelle est la capitale de l'Espagne ?","response":"La capitale de l'Espagne est Madrid."}
+{"instruction":"Quelle est la capitale du Portugal ?","response":"La capitale du Portugal est Lisbonne."}
+{"instruction":"Quelle est la capitale du Japon ?","response":"La capitale du Japon est Tokyo."}
+{"instruction":"Quelle est la capitale du Canada ?","response":"La capitale du Canada est Ottawa."}
+{"instruction":"Quel jour vient apres jeudi ?","response":"Le jour qui vient apres jeudi est vendredi."}
+{"instruction":"Quel jour vient apres vendredi ?","response":"Le jour qui vient apres vendredi est samedi."}
+{"instruction":"Quel jour vient apres lundi ?","response":"Le jour qui vient apres lundi est mardi."}
+{"instruction":"Quel jour vient apres dimanche ?","response":"Le jour qui vient apres dimanche est lundi."}
+{"instruction":"Combien font 2 plus 2 ?","response":"2 plus 2 font 4."}
+{"instruction":"Combien font 3 plus 3 ?","response":"3 plus 3 font 6."}
+{"instruction":"Combien font 5 plus 7 ?","response":"5 plus 7 font 12."}
+{"instruction":"Combien font 9 moins 4 ?","response":"9 moins 4 font 5."}
+{"instruction":"Combien font 6 fois 7 ?","response":"6 fois 7 font 42."}
+{"instruction":"Combien font 12 divise par 3 ?","response":"12 divise par 3 font 4."}
+{"instruction":"Qui a ecrit Les Miserables ?","response":"Victor Hugo a ecrit Les Miserables."}
+{"instruction":"Qui a ecrit Le Petit Prince ?","response":"Antoine de Saint-Exupery a ecrit Le Petit Prince."}
+{"instruction":"Qui a peint la Joconde ?","response":"Leonard de Vinci a peint la Joconde."}
+{"instruction":"Qui a formule la theorie de la relativite ?","response":"Albert Einstein a formule la theorie de la relativite."}
+{"instruction":"Quel animal miaule ?","response":"Le chat est l'animal qui miaule."}
+{"instruction":"Quel animal aboie ?","response":"Le chien est l'animal qui aboie."}
+{"instruction":"Quel est le plus grand ocean du monde ?","response":"Le plus grand ocean du monde est l'ocean Pacifique."}
+{"instruction":"Quel est l'ocean le plus grand ?","response":"Le plus grand ocean du monde est l'ocean Pacifique."}
+{"instruction":"Ou se trouve la Tour Eiffel ?","response":"La Tour Eiffel se trouve a Paris."}
+{"instruction":"Dans quelle ville se trouve la Tour Eiffel ?","response":"La Tour Eiffel se trouve a Paris."}
+{"instruction":"Quand la Seconde Guerre mondiale a-t-elle pris fin ?","response":"La Seconde Guerre mondiale a pris fin en 1945."}
+{"instruction":"En quelle annee la Seconde Guerre mondiale s'est-elle terminee ?","response":"La Seconde Guerre mondiale a pris fin en 1945."}
+{"instruction":"Qu'est-ce que la photosynthese ?","response":"La photosynthese permet aux plantes de transformer la lumiere en energie."}
+{"instruction":"A quoi sert la photosynthese ?","response":"La photosynthese permet aux plantes de produire de l'energie a partir de la lumiere."}
+{"instruction":"Que faut-il au corps humain pour bien fonctionner ?","response":"Le corps humain a besoin d'eau, de sommeil et d'une alimentation equilibree."}
+{"instruction":"De quoi le corps humain a-t-il besoin ?","response":"Le corps humain a besoin d'eau, de sommeil et d'une alimentation equilibree."}
+{"instruction":"Combien y a-t-il de planetes dans le systeme solaire ?","response":"Le systeme solaire contient huit planetes."}
+{"instruction":"Combien de planetes y a-t-il dans le systeme solaire ?","response":"Le systeme solaire contient huit planetes."}
+{"instruction":"Quelle planete abrite la vie connue ?","response":"La Terre abrite la vie connue."}
+{"instruction":"Autour de quoi tourne la Terre ?","response":"La Terre tourne autour du Soleil."}
+{"instruction":"Le Soleil est-il une etoile ?","response":"Oui, le Soleil est une etoile."}
+{"instruction":"A quelle temperature l'eau bout-elle ?","response":"L'eau bout a cent degres Celsius a pression normale."}
+{"instruction":"A combien de degres l'eau bout-elle ?","response":"L'eau bout a cent degres Celsius a pression normale."}
+{"instruction":"Quelle langue parle-t-on principalement en France ?","response":"En France, la langue principalement parlee est le francais."}
+{"instruction":"Quelle est la monnaie utilisee en France ?","response":"La monnaie utilisee en France est l'euro."}
+{"instruction":"Quelle est la monnaie de l'Allemagne ?","response":"La monnaie de l'Allemagne est l'euro."}
+{"instruction":"Quelle est la couleur du ciel par beau temps ?","response":"Par beau temps, le ciel parait bleu."}
+{"instruction":"Pourquoi le ciel semble-t-il bleu ?","response":"Le ciel semble bleu a cause de la diffusion de la lumiere dans l'atmosphere."}
+{"instruction":"Combien de continents y a-t-il sur Terre ?","response":"On compte generalement sept continents sur Terre."}
+{"instruction":"Quel est le plus grand continent ?","response":"Le plus grand continent est l'Asie."}
+{"instruction":"Quel est le plus long fleuve du monde ?","response":"Le Nil est souvent cite comme le plus long fleuve du monde."}
+{"instruction":"Quel est le plus haut sommet du monde ?","response":"Le plus haut sommet du monde est l'Everest."}
+{"instruction":"Quel est l'etat de l'eau a zero degre Celsius ?","response":"A zero degre Celsius, l'eau peut etre solide sous forme de glace."}
+{"instruction":"Que devient l'eau quand elle gele ?","response":"Quand l'eau gele, elle devient de la glace."}
+{"instruction":"Que produit une plante grace a la photosynthese ?","response":"Grace a la photosynthese, une plante produit de l'energie chimique et libere de l'oxygene."}
+{"instruction":"A quoi sert le sommeil ?","response":"Le sommeil aide le corps et le cerveau a recuperer."}
+{"instruction":"Que fait le coeur dans le corps humain ?","response":"Le coeur pompe le sang dans le corps humain."}
+{"instruction":"Quel est l'organe qui pompe le sang ?","response":"L'organe qui pompe le sang est le coeur."}
+{"instruction":"Combien de minutes y a-t-il dans une heure ?","response":"Il y a soixante minutes dans une heure."}
+{"instruction":"Combien de secondes y a-t-il dans une minute ?","response":"Il y a soixante secondes dans une minute."}
+{"instruction":"Combien de jours y a-t-il dans une semaine ?","response":"Il y a sept jours dans une semaine."}
+{"instruction":"Quel mois vient apres mars ?","response":"Le mois qui vient apres mars est avril."}
+{"instruction":"Quel mois vient apres decembre ?","response":"Le mois qui vient apres decembre est janvier."}
+{"instruction":"Quelle est la premiere lettre de l'alphabet ?","response":"La premiere lettre de l'alphabet est A."}
+{"instruction":"Quelle est la derniere lettre de l'alphabet latin ?","response":"La derniere lettre de l'alphabet latin est Z."}
+{"instruction":"Comment dit-on hello en francais ?","response":"On dit bonjour en francais."}
+{"instruction":"Comment traduit-on thank you en francais ?","response":"Thank you se traduit par merci en francais."}
+{"instruction":"Que signifie CPU ?","response":"CPU signifie Central Processing Unit, ou unite centrale de traitement."}
+{"instruction":"Que signifie RAM ?","response":"RAM signifie Random Access Memory, ou memoire vive."}
+{"instruction":"A quoi sert la memoire vive ?","response":"La memoire vive sert a stocker temporairement les donnees utilisees par les programmes en cours."}
+{"instruction":"Qu'est-ce qu'un navigateur web ?","response":"Un navigateur web est un logiciel qui permet d'afficher et de consulter des pages web."}
+{"instruction":"Qu'est-ce qu'un systeme d'exploitation ?","response":"Un systeme d'exploitation est le logiciel de base qui gere le materiel et les programmes d'un ordinateur."}
+{"instruction":"Quelle est la fonction principale d'un clavier ?","response":"La fonction principale d'un clavier est de saisir du texte et des commandes."}
+{"instruction":"Quelle est la fonction principale d'une souris ?","response":"La fonction principale d'une souris est de pointer, selectionner et interagir avec l'interface."}
+{"instruction":"Qu'est-ce qu'un reseau informatique ?","response":"Un reseau informatique relie plusieurs machines pour leur permettre d'echanger des donnees."}
+{"instruction":"A quoi sert Internet ?","response":"Internet sert a echanger des informations et a acceder a des services en ligne."}
+{"instruction":"Qu'est-ce qu'une adresse IP ?","response":"Une adresse IP identifie un appareil sur un reseau."}
+{"instruction":"Qu'est-ce qu'un fichier ?","response":"Un fichier est un ensemble de donnees stockees sous un nom."}
+{"instruction":"Qu'est-ce qu'un dossier ?","response":"Un dossier sert a organiser et regrouper des fichiers."}
+{"instruction":"Pourquoi faire des sauvegardes ?","response":"Faire des sauvegardes permet de proteger ses donnees contre la perte ou la corruption."}
+{"instruction":"Qu'est-ce que l'apprentissage automatique ?","response":"L'apprentissage automatique est une methode qui permet a un modele d'apprendre a partir de donnees."}
+{"instruction":"Qu'est-ce qu'un modele de langage ?","response":"Un modele de langage predit ou genere du texte a partir de donnees textuelles."}
+{"instruction":"A quoi sert un jeu de validation ?","response":"Un jeu de validation sert a mesurer la qualite d'un modele pendant l'entrainement."}
+{"instruction":"A quoi sert le fine-tuning ?","response":"Le fine-tuning adapte un modele a une tache ou a un domaine plus precis."}
+{"instruction":"A quoi sert l'evaluation d'un modele ?","response":"L'evaluation mesure les performances d'un modele sur des donnees de test ou de validation."}
+{"instruction":"Qu'est-ce qu'un token dans un modele de langage ?","response":"Un token est une unite de texte traitee par le modele."}
+{"instruction":"Que signifie JSON ?","response":"JSON signifie JavaScript Object Notation."}
+{"instruction":"A quoi sert un fichier JSONL ?","response":"Un fichier JSONL stocke une suite d'objets JSON, un par ligne."}
+{"instruction":"A quoi sert Python ?","response":"Python sert a programmer des scripts, des applications et des pipelines de donnees."}
+{"instruction":"A quoi sert PyTorch ?","response":"PyTorch sert a construire et entrainer des modeles d'apprentissage profond."}
+{"instruction":"Qu'est-ce qu'un GPU ?","response":"Un GPU est un processeur specialise utile pour accelerer certains calculs, notamment en apprentissage profond."}
+{"instruction":"Pourquoi utiliser un GPU pour entrainer un modele ?","response":"Un GPU permet de traiter beaucoup de calculs en parallele et d'accelerer l'entrainement."}
+{"instruction":"Qu'est-ce qu'un batch en apprentissage automatique ?","response":"Un batch est un groupe d'exemples traite ensemble pendant l'entrainement."}
+{"instruction":"Qu'est-ce qu'une epoch ?","response":"Une epoch correspond a un passage complet sur le jeu d'entrainement."}
+{"instruction":"Que signifie surapprentissage ?","response":"Le surapprentissage signifie qu'un modele memorise trop les donnees d'entrainement et generalise mal."}
+{"instruction":"Qu'est-ce que la perplexite ?","response":"La perplexite mesure a quel point un modele de langage predit difficilement un texte."}
+{"instruction":"Pourquoi nettoyer les donnees avant l'entrainement ?","response":"Nettoyer les donnees permet de reduire le bruit, les doublons et les erreurs."}
+{"instruction":"Pourquoi dedoublonner un corpus ?","response":"Dedoublonner un corpus evite de surrepresenter plusieurs fois le meme contenu."}
+{"instruction":"A quoi sert la tokenisation ?","response":"La tokenisation transforme le texte en unites numeriques exploitables par le modele."}
+{"instruction":"Qu'est-ce qu'un corpus de preentrainement ?","response":"Un corpus de preentrainement est un grand ensemble de textes utilise pour apprendre les regularites du langage."}
+{"instruction":"Qu'est-ce qu'une instruction supervisee ?","response":"Une instruction supervisee est une consigne associee a une reponse de reference."}
+{"instruction":"Pourquoi separer train et validation ?","response":"Separer train et validation permet d'estimer la generalisation du modele sur des donnees non vues."}

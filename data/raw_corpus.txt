@@ -1,0 +1,60 @@
+La France est un pays d'Europe occidentale. Sa capitale est Paris.
+Paris est connue pour la Tour Eiffel, le Louvre et la Seine.
+L'Allemagne est un pays d'Europe. Sa capitale est Berlin.
+Berlin est une grande ville europeenne avec une histoire importante.
+L'Italie a pour capitale Rome.
+L'Espagne a pour capitale Madrid.
+Le Portugal a pour capitale Lisbonne.
+Le Japon a pour capitale Tokyo.
+Le Canada a pour capitale Ottawa.
+Le vendredi vient apres le jeudi. Le samedi vient apres le vendredi.
+Le mardi vient apres le lundi. Le lundi vient apres le dimanche.
+En mathematiques, deux plus deux font quatre.
+Trois plus trois font six. Six fois sept font quarante-deux.
+Le Soleil est une etoile. La Terre tourne autour du Soleil.
+Le systeme solaire contient huit planetes.
+La Terre est la planete connue pour abriter la vie.
+L'eau bout a cent degres Celsius a pression normale.
+Quand l'eau gele, elle devient de la glace.
+Victor Hugo a ecrit Les Miserables.
+Antoine de Saint-Exupery a ecrit Le Petit Prince.
+Leonard de Vinci a peint la Joconde.
+Albert Einstein a formule la theorie de la relativite.
+Le plus grand ocean du monde est l'ocean Pacifique.
+Le plus grand continent du monde est l'Asie.
+Le plus haut sommet du monde est l'Everest.
+Le Nil est souvent cite comme le plus long fleuve du monde.
+Un chat miaule. Un chien aboie.
+Le coeur pompe le sang dans le corps humain.
+Le corps humain a besoin d'eau, de sommeil et d'une alimentation equilibree.
+Le sommeil aide le corps et le cerveau a recuperer.
+La photosynthese permet aux plantes de produire de l'energie a partir de la lumiere.
+Les plantes utilisent la lumiere, l'eau et le dioxyde de carbone pour la photosynthese.
+Par beau temps, le ciel parait bleu.
+Le ciel semble bleu a cause de la diffusion de la lumiere dans l'atmosphere.
+En France, la langue principalement parlee est le francais.
+La monnaie utilisee en France et en Allemagne est l'euro.
+Un navigateur web permet de consulter des pages web.
+Un systeme d'exploitation gere le materiel et les logiciels d'un ordinateur.
+La memoire vive stocke temporairement des donnees utilisees par les programmes.
+Un reseau informatique relie plusieurs machines pour echanger des donnees.
+Une adresse IP identifie un appareil sur un reseau.
+Un fichier stocke des donnees. Un dossier sert a organiser les fichiers.
+Faire des sauvegardes permet de reduire les risques de perte de donnees.
+Python est un langage de programmation polyvalent.
+PyTorch sert a construire et entrainer des modeles d'apprentissage profond.
+L'apprentissage automatique permet a un modele d'apprendre a partir de donnees.
+Un modele de langage predit ou genere du texte.
+Un token est une unite de texte traitee par un modele.
+La tokenisation transforme le texte en unites numeriques.
+Un jeu de validation sert a evaluer un modele pendant l'entrainement.
+Le fine-tuning adapte un modele a une tache plus precise.
+La perplexite mesure la difficulte d'un modele de langage a predire un texte.
+Une epoch correspond a un passage complet sur le jeu d'entrainement.
+Un batch est un groupe d'exemples traite ensemble.
+Un GPU accelere les calculs paralleles utiles pour l'apprentissage profond.
+JSON signifie JavaScript Object Notation.
+Un fichier JSONL contient un objet JSON par ligne.
+Nettoyer les donnees permet de reduire le bruit et les erreurs.
+Dedoublonner un corpus evite de surrepresenter plusieurs fois le meme contenu.
+Une reponse utile doit etre claire, concise et correcte.

@@ -1,101 +1,89 @@
 from __future__ import annotations
 
 import argparse
-from dataclasses import dataclass
 
-import torch
-
-from model import QATransformer, Vocabulary, normalize_text
-
-
-@dataclass
-class Example:
-    question: str
-    answer_id: int
+from llm.checkpoints import load_checkpoint
+from llm.generation import generate_response
+from llm.retrieval import load_retrieval_examples, retrieve_response
+from llm.text import extract_capital_subject, normalize_instruction_text
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Ask a question to the tiny QA model.")
-    parser.add_argument("--model", default="artifacts/qa_model.pt")
-    parser.add_argument("--question", help="Question asked to the model.")
+    parser = argparse.ArgumentParser(description="Chat with a decoder-only language model.")
+    parser.add_argument("--checkpoint", default="artifacts/sft_model.pt")
+    parser.add_argument("--question")
+    parser.add_argument("--max-new-tokens", type=int, default=96)
+    parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument("--top-k", type=int, default=50)
+    parser.add_argument("--top-p", type=float, default=0.9)
+    parser.add_argument("--repetition-penalty", type=float, default=1.2)
+    parser.add_argument("--retrieval-data", default="data/instructions_train.jsonl")
     return parser.parse_args()
 
-
-def load_model(model_path: str) -> tuple[QATransformer, dict[str, int], list[str], int, list[Example]]:
-    checkpoint = torch.load(model_path, map_location="cpu")
-    vocab = checkpoint["vocab"]
-    answers = checkpoint["answers"]
-    max_length = checkpoint["max_length"]
-    examples = [Example(question=item["question"], answer_id=item["answer_id"]) for item in checkpoint.get("examples", [])]
-
-    model = QATransformer(
-        vocab_size=len(vocab),
-        num_answers=len(answers),
-        pad_token_id=vocab[Vocabulary.PAD],
-    )
-    model.load_state_dict(checkpoint["model_state_dict"])
-    model.eval()
-    return model, vocab, answers, max_length, examples
-
-
 def answer_question(
-    model: QATransformer,
-    vocab: dict[str, int],
-    answers: list[str],
-    max_length: int,
-    examples: list[Example],
+    model,
+    tokenizer,
+    retrieval_examples,
     question: str,
+    max_new_tokens: int,
+    temperature: float,
+    top_k: int,
+    top_p: float,
+    repetition_penalty: float,
 ) -> str:
-    normalized_question = normalize_text(question)
-
-    for example in examples:
-        if normalize_text(example.question) == normalized_question:
-            return answers[example.answer_id]
-
-    question_tokens = set(normalized_question.split())
-    best_example: Example | None = None
-    best_score = 0.0
-    for example in examples:
-        example_tokens = set(normalize_text(example.question).split())
-        if not question_tokens or not example_tokens:
-            continue
-        score = len(question_tokens & example_tokens) / len(question_tokens | example_tokens)
-        if score > best_score:
-            best_score = score
-            best_example = example
-
-    if best_example is not None and best_score >= 0.6:
-        return answers[best_example.answer_id]
-
-    vocabulary = Vocabulary()
-    vocabulary.token_to_id = vocab
-    vocabulary.id_to_token = [""] * len(vocab)
-    for token, idx in vocab.items():
-        vocabulary.id_to_token[idx] = token
-
-    encoded = vocabulary.encode(question, max_length)
-    inputs = torch.tensor([encoded], dtype=torch.long)
-
-    with torch.no_grad():
-        logits = model(inputs)
-        answer_id = logits.argmax(dim=1).item()
-    return answers[answer_id]
+    retrieved = retrieve_response(question, retrieval_examples)
+    if retrieved is not None:
+        return retrieved
+    if extract_capital_subject(question) is not None:
+        return "Je ne sais pas."
+    if len(normalize_instruction_text(question).split()) >= 3:
+        return "Je ne sais pas."
+    response = generate_response(model, tokenizer, question, max_new_tokens, temperature, top_k, top_p, repetition_penalty)
+    return response or "Je ne sais pas."
 
 
 def main() -> None:
     args = parse_args()
-    model, vocab, answers, max_length, examples = load_model(args.model)
+    model, tokenizer, _ = load_checkpoint(args.checkpoint)
+    retrieval_examples = load_retrieval_examples(args.retrieval_data)
 
     if args.question:
-        print(answer_question(model, vocab, answers, max_length, examples, args.question))
+        print(
+            answer_question(
+                model,
+                tokenizer,
+                retrieval_examples,
+                args.question,
+                args.max_new_tokens,
+                args.temperature,
+                args.top_k,
+                args.top_p,
+                args.repetition_penalty,
+            )
+        )
         return
 
-    print("Tape une question en francais. Ctrl+C pour quitter.")
-    while True:
-        question = input("> ").strip()
-        if not question:
-            continue
-        print(answer_question(model, vocab, answers, max_length, examples, question))
+    print("Tape une instruction en francais. Ctrl+C pour quitter.")
+    try:
+        while True:
+            question = input("> ").strip()
+            if not question:
+                continue
+            print(
+                answer_question(
+                    model,
+                    tokenizer,
+                    retrieval_examples,
+                    question,
+                    args.max_new_tokens,
+                    args.temperature,
+                    args.top_k,
+                    args.top_p,
+                    args.repetition_penalty,
+                )
+            )
+    except (EOFError, KeyboardInterrupt):
+        print()
 
 
 if __name__ == "__main__":

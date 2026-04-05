@@ -1,0 +1,8 @@
+{
+  "stage": "pretrain",
+  "train_tokens": 3282,
+  "val_tokens": 173,
+  "epochs": 1,
+  "batch_size": 4,
+  "block_size": 64
+}

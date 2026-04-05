@@ -1,0 +1,10 @@
+{
+  "train_shards": [
+    "artifacts/datasets/pretrain_train_shards/train_00000.npy"
+  ],
+  "val_shards": [
+    "artifacts/datasets/pretrain_val_shards/val_00000.npy"
+  ],
+  "train_tokens": 3282,
+  "val_tokens": 173
+}

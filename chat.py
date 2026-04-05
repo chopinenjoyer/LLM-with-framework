@@ -3,9 +3,8 @@ from __future__ import annotations
 import argparse
 
 from llm.checkpoints import load_checkpoint
-from llm.generation import generate_response
-from llm.retrieval import load_retrieval_examples, retrieve_response
-from llm.text import extract_capital_subject, normalize_instruction_text
+from llm.inference import INFERENCE_MODES, answer_question
+from llm.retrieval import load_retrieval_examples
 
 
 def parse_args() -> argparse.Namespace:
@@ -18,28 +17,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--top-p", type=float, default=0.9)
     parser.add_argument("--repetition-penalty", type=float, default=1.2)
     parser.add_argument("--retrieval-data", default="data/instructions_train.jsonl")
+    parser.add_argument("--mode", choices=INFERENCE_MODES, default="hybrid")
     return parser.parse_args()
-
-def answer_question(
-    model,
-    tokenizer,
-    retrieval_examples,
-    question: str,
-    max_new_tokens: int,
-    temperature: float,
-    top_k: int,
-    top_p: float,
-    repetition_penalty: float,
-) -> str:
-    retrieved = retrieve_response(question, retrieval_examples)
-    if retrieved is not None:
-        return retrieved
-    if extract_capital_subject(question) is not None:
-        return "Je ne sais pas."
-    if len(normalize_instruction_text(question).split()) >= 3:
-        return "Je ne sais pas."
-    response = generate_response(model, tokenizer, question, max_new_tokens, temperature, top_k, top_p, repetition_penalty)
-    return response or "Je ne sais pas."
 
 
 def main() -> None:
@@ -59,6 +38,7 @@ def main() -> None:
                 args.top_k,
                 args.top_p,
                 args.repetition_penalty,
+                args.mode,
             )
         )
         return
@@ -80,6 +60,7 @@ def main() -> None:
                     args.top_k,
                     args.top_p,
                     args.repetition_penalty,
+                    args.mode,
                 )
             )
     except (EOFError, KeyboardInterrupt):

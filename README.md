@@ -58,6 +58,12 @@ python finetune.py --data-dir artifacts/datasets --checkpoint artifacts/pretrain
 python evaluate.py --data-dir artifacts/datasets --checkpoint artifacts/sft_model.pt
 ```
 
+Par defaut, l'evaluation lit `data/instructions_eval.jsonl` et compare trois modes:
+
+- `model`: generation seule
+- `retrieval`: recherche seule dans les exemples SFT
+- `hybrid`: retrieval puis generation
+
 ## 6. Discuter avec le modele
 
 ```bash
@@ -70,6 +76,13 @@ Question unique:
 python chat.py --checkpoint artifacts/sft_model.pt --question "Quel jour vient apres jeudi ?"
 ```
 
+Forcer un mode d'inference:
+
+```bash
+python chat.py --checkpoint artifacts/sft_model.pt --mode model
+python chat.py --checkpoint artifacts/sft_model.pt --mode hybrid
+```
+
 ## Fichiers principaux
 
 - `tokenizer.py`: tokenizer byte-level
@@ -80,6 +93,7 @@ python chat.py --checkpoint artifacts/sft_model.pt --question "Quel jour vient a
 - `finetune.py`: fine-tuning supervise
 - `evaluate.py`: perplexite et exact match
 - `chat.py`: inference interactive
+- `data/instructions_eval.jsonl`: evaluation hors train plus difficile
 
 ## Formats de donnees
 
@@ -95,6 +109,12 @@ Instruction tuning:
 
 ```json
 {"instruction":"Explique la gravite.","response":"La gravite est la force..."}
+```
+
+Evaluation dediee:
+
+```json
+{"instruction":"Quelle ville est la capitale du Japon ?","response":"La capitale du Japon est Tokyo."}
 ```
 
 ## Point important

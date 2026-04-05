@@ -7,10 +7,25 @@ L'Espagne a pour capitale Madrid.
 Le Portugal a pour capitale Lisbonne.
 Le Japon a pour capitale Tokyo.
 Le Canada a pour capitale Ottawa.
+Le Royaume-Uni a pour capitale Londres.
+La Belgique a pour capitale Bruxelles.
+Les Pays-Bas ont pour capitale Amsterdam.
+La Suisse a pour capitale Berne.
+La Norvege a pour capitale Oslo.
+La Suede a pour capitale Stockholm.
+L'Australie a pour capitale Canberra.
+Le Bresil a pour capitale Brasilia.
+Le Mexique a pour capitale Mexico.
+L'Argentine a pour capitale Buenos Aires.
 Le vendredi vient apres le jeudi. Le samedi vient apres le vendredi.
 Le mardi vient apres le lundi. Le lundi vient apres le dimanche.
+Le mercredi vient apres le mardi. Le jeudi vient apres le mercredi.
+Le mois d'avril vient apres mars. Le mois de juillet vient apres juin.
+Le mois d'octobre vient apres septembre. Janvier vient apres decembre.
 En mathematiques, deux plus deux font quatre.
 Trois plus trois font six. Six fois sept font quarante-deux.
+Huit plus neuf font dix-sept. Sept fois huit font cinquante-six.
+Douze divise par trois font quatre. Dix-huit divise par six font trois.
 Le Soleil est une etoile. La Terre tourne autour du Soleil.
 Le systeme solaire contient huit planetes.
 La Terre est la planete connue pour abriter la vie.
@@ -20,11 +35,14 @@ Victor Hugo a ecrit Les Miserables.
 Antoine de Saint-Exupery a ecrit Le Petit Prince.
 Leonard de Vinci a peint la Joconde.
 Albert Einstein a formule la theorie de la relativite.
+Mozart a compose La Flute enchantee.
+L'Odyssee est traditionnellement attribuee a Homere.
 Le plus grand ocean du monde est l'ocean Pacifique.
 Le plus grand continent du monde est l'Asie.
 Le plus haut sommet du monde est l'Everest.
 Le Nil est souvent cite comme le plus long fleuve du monde.
-Un chat miaule. Un chien aboie.
+Un chat miaule. Un chien aboie. Un cheval hennit.
+Une poule caquette et pond des oeufs.
 Le coeur pompe le sang dans le corps humain.
 Le corps humain a besoin d'eau, de sommeil et d'une alimentation equilibree.
 Le sommeil aide le corps et le cerveau a recuperer.
@@ -34,19 +52,28 @@ Par beau temps, le ciel parait bleu.
 Le ciel semble bleu a cause de la diffusion de la lumiere dans l'atmosphere.
 En France, la langue principalement parlee est le francais.
 La monnaie utilisee en France et en Allemagne est l'euro.
+La Tour Eiffel se trouve a Paris.
+Le Colisee se trouve a Rome.
+La statue de la Liberte se trouve a New York.
+La Seconde Guerre mondiale a pris fin en 1945.
+Le premier pas humain sur la Lune a eu lieu en 1969.
 Un navigateur web permet de consulter des pages web.
 Un systeme d'exploitation gere le materiel et les logiciels d'un ordinateur.
 La memoire vive stocke temporairement des donnees utilisees par les programmes.
 Un reseau informatique relie plusieurs machines pour echanger des donnees.
 Une adresse IP identifie un appareil sur un reseau.
+Une URL permet de localiser une ressource sur le web.
 Un fichier stocke des donnees. Un dossier sert a organiser les fichiers.
+Une base de donnees sert a stocker et retrouver des informations.
 Faire des sauvegardes permet de reduire les risques de perte de donnees.
+Internet sert a echanger des informations et a acceder a des services.
 Python est un langage de programmation polyvalent.
 PyTorch sert a construire et entrainer des modeles d'apprentissage profond.
 L'apprentissage automatique permet a un modele d'apprendre a partir de donnees.
 Un modele de langage predit ou genere du texte.
 Un token est une unite de texte traitee par un modele.
 La tokenisation transforme le texte en unites numeriques.
+Un tokenizer convertit le texte brut en elements exploitables par le modele.
 Un jeu de validation sert a evaluer un modele pendant l'entrainement.
 Le fine-tuning adapte un modele a une tache plus precise.
 La perplexite mesure la difficulte d'un modele de langage a predire un texte.
@@ -54,7 +81,16 @@ Une epoch correspond a un passage complet sur le jeu d'entrainement.
 Un batch est un groupe d'exemples traite ensemble.
 Un GPU accelere les calculs paralleles utiles pour l'apprentissage profond.
 JSON signifie JavaScript Object Notation.
-Un fichier JSONL contient un objet JSON par ligne.
+JSONL contient un objet JSON par ligne.
+CPU signifie Central Processing Unit.
+RAM signifie Random Access Memory.
+API signifie Application Programming Interface.
+HTTP signifie HyperText Transfer Protocol.
 Nettoyer les donnees permet de reduire le bruit et les erreurs.
 Dedoublonner un corpus evite de surrepresenter plusieurs fois le meme contenu.
+Separer train et validation aide a mesurer la generalisation.
+Le surapprentissage apparait quand un modele memorise trop les donnees d'entrainement.
+La regularisation limite le surapprentissage.
+Un optimiseur ajuste les poids du modele pour reduire la perte.
+Une fonction de perte mesure l'ecart entre prediction et cible.
 Une reponse utile doit etre claire, concise et correcte.

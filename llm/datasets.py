@@ -25,7 +25,7 @@ class PackedTokenDataset(Dataset):
             pad = np.full(self.block_size + 1 - len(chunk), fill_value=0, dtype=np.int64)
             chunk = np.concatenate([chunk, pad])
         x = torch.tensor(chunk[:-1], dtype=torch.long)
-        y = torch.tensor(chunk[:-1], dtype=torch.long)
+        y = torch.tensor(chunk[1:], dtype=torch.long)
         return x, y
 
 
@@ -57,7 +57,7 @@ class ShardedPackedTokenDataset(Dataset):
             pad = np.full(self.block_size + 1 - len(chunk), fill_value=0, dtype=np.int64)
             chunk = np.concatenate([chunk, pad])
         x = torch.tensor(chunk[:-1], dtype=torch.long)
-        y = torch.tensor(chunk[:-1], dtype=torch.long)
+        y = torch.tensor(chunk[1:], dtype=torch.long)
         return x, y
 
 

@@ -71,10 +71,31 @@ def normalize_instruction_text(text: str) -> str:
     text = "".join(ch for ch in text if unicodedata.category(ch) != "Mn")
     text = text.replace("'", " ")
     text = re.sub(r"[^a-z0-9\s]", " ", text)
+    text = re.sub(r"\bpeux tu donner\b", "quelle est", text)
+    text = re.sub(r"\bquelle ville est la capitale\b", "quelle est la capitale", text)
+    text = re.sub(r"\bquelle ville sert de capitale a\b", "quelle est la capitale de", text)
+    text = re.sub(r"\bla capitale ([a-z0-9\s]+) c est quoi\b", r"quelle est la capitale \1", text)
     text = re.sub(r"\bcapital\b", "capitale", text)
+    text = re.sub(r"\bquel jour suit\b", "quel jour vient apres", text)
+    text = re.sub(r"\bquel est le jour apres\b", "quel jour vient apres", text)
     text = re.sub(r"\bquelle jour\b", "quel jour", text)
+    text = re.sub(r"\bquel mois suit\b", "quel mois vient apres", text)
+    text = re.sub(r"\bquel mois arrive apres\b", "quel mois vient apres", text)
     text = re.sub(r"\bquelle mois\b", "quel mois", text)
     text = re.sub(r"\bquelle animal\b", "quel animal", text)
+    text = re.sub(r"\bquel resultat donne\b", "combien font", text)
+    text = re.sub(r"\bcombien vaut\b", "combien font", text)
+    text = re.sub(r"\bqui est l auteur du\b", "qui a ecrit", text)
+    text = re.sub(r"\bquel peintre a realise\b", "qui a peint", text)
+    text = re.sub(r"\bdans quelle ville peut on voir\b", "ou se trouve", text)
+    text = re.sub(r"\ba quoi correspond le sigle\b", "que signifie", text)
+    text = re.sub(r"\bque veut dire\b", "que signifie", text)
+    text = re.sub(r"\ben informatique\b", " ", text)
+    text = re.sub(r"\bquel est le role d un\b", "qu est ce qu un", text)
+    text = re.sub(r"\bquel est le but du\b", "a quoi sert", text)
+    text = re.sub(r"\bcomment definir un\b", "qu est ce qu un", text)
+    text = re.sub(r"\bsur terre\b", "du monde", text)
+    text = re.sub(r"\bvaste\b", "grand", text)
     text = re.sub(r"\butilisee\b", "utilise", text)
     text = re.sub(r"\butilisees\b", "utilise", text)
     text = re.sub(r"\butilises\b", "utilise", text)
@@ -134,9 +155,13 @@ def instruction_similarity(a: str, b: str) -> float:
 
 
 def normalize_capital_subject_tokens(tokens: list[str], start: int = 0) -> str | None:
-    while start < len(tokens) and tokens[start] in {"de", "du", "des", "d", "la", "le", "les", "l"}:
+    while start < len(tokens) and tokens[start] in {"a", "au", "aux", "de", "du", "des", "d", "la", "le", "les", "l"}:
         start += 1
-    subject_tokens = tokens[start:]
+    subject_tokens: list[str] = []
+    for token in tokens[start:]:
+        if subject_tokens and token in {"c", "est", "quoi", "quelle", "quel", "ville", "sert"}:
+            break
+        subject_tokens.append(token)
     if not subject_tokens:
         return None
     return " ".join(subject_tokens)

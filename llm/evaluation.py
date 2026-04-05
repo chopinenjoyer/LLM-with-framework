@@ -10,8 +10,9 @@ from torch.utils.data import DataLoader
 
 from llm.dataio import load_instruction_jsonl, load_shard_manifest
 from llm.datasets import PackedTokenDataset, SFTDataset, ShardedPackedTokenDataset, collate_sft
-from llm.generation import generate_response
+from llm.inference import answer_question
 from llm.models import DecoderOnlyLM
+from llm.retrieval import RetrievalExample
 from llm.text import normalize_eval_text
 from tokenizer import ByteTokenizer
 
@@ -62,25 +63,29 @@ def evaluate_sft_loss(model: DecoderOnlyLM, tokenizer: ByteTokenizer, data_dir: 
 def evaluate_exact_match(
     model: DecoderOnlyLM,
     tokenizer: ByteTokenizer,
+    retrieval_examples: list[RetrievalExample],
     validation_path: Path,
     max_new_tokens: int,
     temperature: float,
     top_k: int,
     top_p: float,
     repetition_penalty: float,
+    mode: str = "model",
 ) -> float:
     examples = load_instruction_jsonl(validation_path)
     correct = 0
     for example in examples:
-        prediction = generate_response(
+        prediction = answer_question(
             model,
             tokenizer,
+            retrieval_examples,
             example.instruction,
             max_new_tokens,
             temperature,
             top_k,
             top_p,
             repetition_penalty,
+            mode=mode,
         )
         if normalize_eval_text(prediction) == normalize_eval_text(example.response):
             correct += 1

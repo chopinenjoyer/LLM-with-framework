@@ -1,0 +1,24 @@
+{"instruction":"Quelle ville est la capitale du Japon ?","response":"La capitale du Japon est Tokyo."}
+{"instruction":"Peux-tu donner la capitale du Canada ?","response":"La capitale du Canada est Ottawa."}
+{"instruction":"La capitale du Mexique, c'est quoi ?","response":"La capitale du Mexique est Mexico."}
+{"instruction":"Quelle ville sert de capitale a la Belgique ?","response":"La capitale de la Belgique est Bruxelles."}
+{"instruction":"Quel jour suit lundi ?","response":"Le jour qui vient apres lundi est mardi."}
+{"instruction":"Quel est le jour apres mercredi ?","response":"Le jour qui vient apres mercredi est jeudi."}
+{"instruction":"Quel mois suit septembre ?","response":"Le mois qui vient apres septembre est octobre."}
+{"instruction":"Quel mois arrive apres juin ?","response":"Le mois qui vient apres juin est juillet."}
+{"instruction":"Combien font 8 plus 9 ?","response":"8 plus 9 font 17."}
+{"instruction":"Quel resultat donne 7 fois 8 ?","response":"7 fois 8 font 56."}
+{"instruction":"Combien vaut 18 divise par 6 ?","response":"18 divise par 6 font 3."}
+{"instruction":"Qui est l'auteur du Petit Prince ?","response":"Antoine de Saint-Exupery a ecrit Le Petit Prince."}
+{"instruction":"Quel peintre a realise la Joconde ?","response":"Leonard de Vinci a peint la Joconde."}
+{"instruction":"Dans quelle ville peut-on voir la Tour Eiffel ?","response":"La Tour Eiffel se trouve a Paris."}
+{"instruction":"A quoi correspond le sigle CPU ?","response":"CPU signifie Central Processing Unit, ou unite centrale de traitement."}
+{"instruction":"Que veut dire RAM en informatique ?","response":"RAM signifie Random Access Memory, ou memoire vive."}
+{"instruction":"Quel est le role d'un navigateur web ?","response":"Un navigateur web est un logiciel qui permet d'afficher et de consulter des pages web."}
+{"instruction":"A quoi sert Internet en pratique ?","response":"Internet sert a echanger des informations et a acceder a des services en ligne."}
+{"instruction":"Pourquoi est-ce utile de faire des sauvegardes ?","response":"Faire des sauvegardes permet de proteger ses donnees contre la perte ou la corruption."}
+{"instruction":"Quel est le but du fine-tuning ?","response":"Le fine-tuning adapte un modele a une tache ou a un domaine plus precis."}
+{"instruction":"A quoi sert un jeu de validation pendant l'entrainement ?","response":"Un jeu de validation sert a mesurer la qualite d'un modele pendant l'entrainement."}
+{"instruction":"Comment definir un token dans un modele de langage ?","response":"Un token est une unite de texte traitee par le modele."}
+{"instruction":"Quel est le plus haut sommet sur Terre ?","response":"Le plus haut sommet du monde est l'Everest."}
+{"instruction":"Quel ocean est le plus vaste ?","response":"Le plus grand ocean du monde est l'ocean Pacifique."}

@@ -1,10 +1,20 @@
-{"instruction":"Quelle est la capitale du Japon ?","response":"La capitale du Japon est Tokyo."}
-{"instruction":"Quelle est la capitale du Canada ?","response":"La capitale du Canada est Ottawa."}
-{"instruction":"Quel jour vient apres lundi ?","response":"Le jour qui vient apres lundi est mardi."}
-{"instruction":"Combien font 6 fois 7 ?","response":"6 fois 7 font 42."}
-{"instruction":"Que signifie RAM ?","response":"RAM signifie Random Access Memory, ou memoire vive."}
-{"instruction":"Qu'est-ce qu'un navigateur web ?","response":"Un navigateur web est un logiciel qui permet d'afficher et de consulter des pages web."}
-{"instruction":"Pourquoi faire des sauvegardes ?","response":"Faire des sauvegardes permet de proteger ses donnees contre la perte ou la corruption."}
-{"instruction":"A quoi sert le fine-tuning ?","response":"Le fine-tuning adapte un modele a une tache ou a un domaine plus precis."}
-{"instruction":"Qu'est-ce qu'un token dans un modele de langage ?","response":"Un token est une unite de texte traitee par le modele."}
-{"instruction":"Quel est le plus haut sommet du monde ?","response":"Le plus haut sommet du monde est l'Everest."}
+{"instruction":"Quelle est la capitale de la Grece ?","response":"La capitale de la Grece est Athenes."}
+{"instruction":"Quelle est la capitale de l'Autriche ?","response":"La capitale de l'Autriche est Vienne."}
+{"instruction":"Quel jour vient apres samedi ?","response":"Le jour qui vient apres samedi est dimanche."}
+{"instruction":"Quel mois vient apres novembre ?","response":"Le mois qui vient apres novembre est decembre."}
+{"instruction":"Combien font 11 plus 5 ?","response":"11 plus 5 font 16."}
+{"instruction":"Combien font 20 moins 8 ?","response":"20 moins 8 font 12."}
+{"instruction":"Combien font 9 fois 4 ?","response":"9 fois 4 font 36."}
+{"instruction":"Combien font 16 divise par 4 ?","response":"16 divise par 4 font 4."}
+{"instruction":"Qui a peint Guernica ?","response":"Pablo Picasso a peint Guernica."}
+{"instruction":"Ou se trouve Big Ben ?","response":"Big Ben se trouve a Londres."}
+{"instruction":"Qu'est-ce qu'un serveur web ?","response":"Un serveur web est un logiciel ou une machine qui fournit des pages et des ressources via le web."}
+{"instruction":"Qu'est-ce qu'un navigateur ?","response":"Un navigateur est un logiciel qui permet de visiter des sites et des pages web."}
+{"instruction":"Que signifie URL ?","response":"URL signifie Uniform Resource Locator."}
+{"instruction":"A quoi sert une base de donnees ?","response":"Une base de donnees sert a stocker, organiser et retrouver des informations."}
+{"instruction":"Pourquoi utiliser un jeu de test ?","response":"Un jeu de test sert a mesurer les performances finales d'un modele sur des donnees non vues."}
+{"instruction":"Qu'est-ce que la precision d'un modele ?","response":"La precision d'un modele mesure la part de predictions correctes parmi ses predictions positives dans certains contextes."}
+{"instruction":"Que fait la RAM dans un ordinateur ?","response":"La RAM conserve temporairement les donnees et programmes utilises rapidement par l'ordinateur."}
+{"instruction":"Pourquoi versionner le code ?","response":"Versionner le code permet de suivre les changements, collaborer et revenir a des etats precedents."}
+{"instruction":"Qu'est-ce qu'un tokenizer ?","response":"Un tokenizer convertit le texte en unites exploitables par le modele."}
+{"instruction":"Pourquoi separer les donnees d'evaluation du train ?","response":"Separer les donnees d'evaluation du train permet de mesurer plus justement la generalisation."}

@@ -5,6 +5,6 @@
   "val_shards": [
     "artifacts/datasets/pretrain_val_shards/val_00000.npy"
   ],
-  "train_tokens": 3282,
-  "val_tokens": 173
+  "train_tokens": 5011,
+  "val_tokens": 264
 }

@@ -130,3 +130,77 @@
 {"instruction": "A quoi sert PyTorch ?", "response": "PyTorch sert a construire et entrainer des modeles d'apprentissage profond."}
 {"instruction": "A quoi sert Python ?", "response": "Python sert a programmer des scripts, des applications et des pipelines de donnees."}
 {"instruction": "A quoi sert un fichier JSONL ?", "response": "Un fichier JSONL stocke une suite d'objets JSON, un par ligne."}
+{"instruction": "Quelle est la capitale de l'Autriche ?", "response": "La capitale de l'Autriche est Vienne."}
+{"instruction": "Quelle est la capitale de la Grece ?", "response": "La capitale de la Grece est Athenes."}
+{"instruction": "Quelle est la capitale de la Turquie ?", "response": "La capitale de la Turquie est Ankara."}
+{"instruction": "Quelle est la capitale de la Pologne ?", "response": "La capitale de la Pologne est Varsovie."}
+{"instruction": "Quelle est la capitale de la Hongrie ?", "response": "La capitale de la Hongrie est Budapest."}
+{"instruction": "Quelle est la capitale de la Tchequie ?", "response": "La capitale de la Tchequie est Prague."}
+{"instruction": "Quelle est la capitale de l'Irlande ?", "response": "La capitale de l'Irlande est Dublin."}
+{"instruction": "Quelle est la capitale du Danemark ?", "response": "La capitale du Danemark est Copenhague."}
+{"instruction": "Quelle est la capitale de la Finlande ?", "response": "La capitale de la Finlande est Helsinki."}
+{"instruction": "Quelle est la capitale de la Roumanie ?", "response": "La capitale de la Roumanie est Bucarest."}
+{"instruction": "Quelle est la capitale de la Bulgarie ?", "response": "La capitale de la Bulgarie est Sofia."}
+{"instruction": "Quelle est la capitale du Maroc ?", "response": "La capitale du Maroc est Rabat."}
+{"instruction": "Quelle est la capitale de l'Algerie ?", "response": "La capitale de l'Algerie est Alger."}
+{"instruction": "Quelle est la capitale de la Tunisie ?", "response": "La capitale de la Tunisie est Tunis."}
+{"instruction": "Quelle est la capitale de l'Egypte ?", "response": "La capitale de l'Egypte est Le Caire."}
+{"instruction": "Quelle est la capitale de la Chine ?", "response": "La capitale de la Chine est Pekin."}
+{"instruction": "Quelle est la capitale de l'Inde ?", "response": "La capitale de l'Inde est New Delhi."}
+{"instruction": "Quelle est la capitale de la Coree du Sud ?", "response": "La capitale de la Coree du Sud est Seoul."}
+{"instruction": "Quelle est la capitale de la Russie ?", "response": "La capitale de la Russie est Moscou."}
+{"instruction": "Quelle est la capitale des Etats-Unis ?", "response": "La capitale des Etats-Unis est Washington."}
+{"instruction": "Quelle est la capitale de la Nouvelle-Zelande ?", "response": "La capitale de la Nouvelle-Zelande est Wellington."}
+{"instruction": "Capitale de la Grece", "response": "La capitale de la Grece est Athenes."}
+{"instruction": "Capitale du Maroc", "response": "La capitale du Maroc est Rabat."}
+{"instruction": "Quelle ville est la capitale de la Chine ?", "response": "La capitale de la Chine est Pekin."}
+{"instruction": "Quelle ville est la capitale de l'Inde ?", "response": "La capitale de l'Inde est New Delhi."}
+{"instruction": "Quel jour vient apres samedi ?", "response": "Le jour qui vient apres samedi est dimanche."}
+{"instruction": "Quel mois vient apres janvier ?", "response": "Le mois qui vient apres janvier est fevrier."}
+{"instruction": "Quel mois vient apres fevrier ?", "response": "Le mois qui vient apres fevrier est mars."}
+{"instruction": "Quel mois vient apres avril ?", "response": "Le mois qui vient apres avril est mai."}
+{"instruction": "Quel mois vient apres mai ?", "response": "Le mois qui vient apres mai est juin."}
+{"instruction": "Quel mois vient apres juillet ?", "response": "Le mois qui vient apres juillet est aout."}
+{"instruction": "Quel mois vient apres octobre ?", "response": "Le mois qui vient apres octobre est novembre."}
+{"instruction": "Quel mois vient apres novembre ?", "response": "Le mois qui vient apres novembre est decembre."}
+{"instruction": "Combien font 4 plus 4 ?", "response": "4 plus 4 font 8."}
+{"instruction": "Combien font 10 plus 5 ?", "response": "10 plus 5 font 15."}
+{"instruction": "Combien font 13 moins 6 ?", "response": "13 moins 6 font 7."}
+{"instruction": "Combien font 20 moins 9 ?", "response": "20 moins 9 font 11."}
+{"instruction": "Combien font 9 fois 4 ?", "response": "9 fois 4 font 36."}
+{"instruction": "Combien font 3 fois 9 ?", "response": "3 fois 9 font 27."}
+{"instruction": "Combien font 24 divise par 6 ?", "response": "24 divise par 6 font 4."}
+{"instruction": "Combien font 15 divise par 5 ?", "response": "15 divise par 5 font 3."}
+{"instruction": "Ou se trouve Big Ben ?", "response": "Big Ben se trouve a Londres."}
+{"instruction": "Dans quelle ville se trouve Big Ben ?", "response": "Big Ben se trouve a Londres."}
+{"instruction": "Ou se trouve le Parthenon ?", "response": "Le Parthenon se trouve a Athenes."}
+{"instruction": "Ou se trouve le mont Fuji ?", "response": "Le mont Fuji se trouve au Japon."}
+{"instruction": "Qui a peint Guernica ?", "response": "Pablo Picasso a peint Guernica."}
+{"instruction": "Qui a etudie la radioactivite ?", "response": "Marie Curie a mene des travaux majeurs sur la radioactivite."}
+{"instruction": "Qui a formule la gravitation universelle ?", "response": "Isaac Newton a formule la loi de la gravitation universelle."}
+{"instruction": "Quelle est la plus grande planete du systeme solaire ?", "response": "La plus grande planete du systeme solaire est Jupiter."}
+{"instruction": "Quelle planete est surnommee la planete rouge ?", "response": "Mars est souvent appelee la planete rouge."}
+{"instruction": "Quelle planete est connue pour ses anneaux ?", "response": "Saturne est connue pour ses anneaux."}
+{"instruction": "Qu'est-ce qu'un serveur web ?", "response": "Un serveur web est un logiciel ou une machine qui fournit des pages et des ressources via le web."}
+{"instruction": "A quoi sert un serveur web ?", "response": "Un serveur web sert a repondre a des requetes et a fournir des ressources sur le web."}
+{"instruction": "Qu'est-ce qu'une base de donnees relationnelle ?", "response": "Une base de donnees relationnelle organise les informations en tables reliees entre elles."}
+{"instruction": "A quoi sert une API ?", "response": "Une API permet a deux logiciels d'echanger des donnees de facon structuree."}
+{"instruction": "Que signifie HTTPS ?", "response": "HTTPS signifie HyperText Transfer Protocol Secure."}
+{"instruction": "A quoi sert le HTML ?", "response": "Le HTML sert a structurer le contenu d'une page web."}
+{"instruction": "A quoi sert le CSS ?", "response": "Le CSS sert a definir la presentation visuelle d'une page web."}
+{"instruction": "A quoi sert JavaScript dans une page web ?", "response": "JavaScript sert a ajouter du comportement interactif dans une page web."}
+{"instruction": "A quoi sert Git ?", "response": "Git sert a versionner le code source et suivre les modifications."}
+{"instruction": "Qu'est-ce qu'un commit Git ?", "response": "Un commit Git enregistre un ensemble coherent de modifications dans l'historique."}
+{"instruction": "Qu'est-ce qu'une branche Git ?", "response": "Une branche Git permet de travailler sur une evolution isolee du code."}
+{"instruction": "Pourquoi ecrire des tests automatises ?", "response": "Les tests automatises verifient qu'un programme conserve le comportement attendu."}
+{"instruction": "Qu'est-ce qu'un bug logiciel ?", "response": "Un bug est un defaut dans un logiciel."}
+{"instruction": "Que signifie deboguer ?", "response": "Deboguer consiste a identifier puis corriger un probleme."}
+{"instruction": "Qu'est-ce qu'un routeur ?", "response": "Un routeur dirige le trafic entre differents reseaux."}
+{"instruction": "Pourquoi faire des sauvegardes regulieres ?", "response": "Des sauvegardes regulieres limitent l'impact des pannes et des pertes de donnees."}
+{"instruction": "Quelle difference entre RAM et disque ?", "response": "La RAM stocke temporairement des donnees, tandis que le disque les conserve de maniere persistante."}
+{"instruction": "Quel est le role du CPU ?", "response": "Le CPU execute des instructions generales pour faire fonctionner les programmes."}
+{"instruction": "Quel est le role du GPU ?", "response": "Le GPU accelere certains calculs massivement paralleles."}
+{"instruction": "Que fait un tokenizer ?", "response": "Un tokenizer decoupe le texte en unites manipulables par le modele."}
+{"instruction": "A quoi sert le preentrainement ?", "response": "Le preentrainement apprend des regularites generales du langage."}
+{"instruction": "Pourquoi separer evaluation et entrainement ?", "response": "Separer l'evaluation de l'entrainement permet de mesurer la generalisation sur des exemples non vus."}
+{"instruction": "Qu'est-ce qu'un modele qui generalise bien ?", "response": "Un modele qui generalise bien repond correctement sur des exemples non vus."}

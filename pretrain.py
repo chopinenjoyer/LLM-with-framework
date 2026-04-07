@@ -23,9 +23,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--block-size", type=int, default=256)
     parser.add_argument("--lr", type=float, default=3e-4)
-    parser.add_argument("--n-layers", type=int, default=4)
-    parser.add_argument("--n-heads", type=int, default=4)
-    parser.add_argument("--n-embd", type=int, default=128)
+    parser.add_argument("--n-layers", type=int, default=6)
+    parser.add_argument("--n-heads", type=int, default=6)
+    parser.add_argument("--n-embd", type=int, default=192)
     parser.add_argument("--dropout", type=float, default=0.1)
     return parser.parse_args()
 

@@ -94,3 +94,86 @@ La regularisation limite le surapprentissage.
 Un optimiseur ajuste les poids du modele pour reduire la perte.
 Une fonction de perte mesure l'ecart entre prediction et cible.
 Une reponse utile doit etre claire, concise et correcte.
+L'Autriche a pour capitale Vienne.
+La Grece a pour capitale Athenes.
+La Turquie a pour capitale Ankara.
+La Pologne a pour capitale Varsovie.
+La Hongrie a pour capitale Budapest.
+La Tchequie a pour capitale Prague.
+L'Irlande a pour capitale Dublin.
+Le Danemark a pour capitale Copenhague.
+La Finlande a pour capitale Helsinki.
+La Roumanie a pour capitale Bucarest.
+La Bulgarie a pour capitale Sofia.
+Le Maroc a pour capitale Rabat.
+L'Algerie a pour capitale Alger.
+La Tunisie a pour capitale Tunis.
+L'Egypte a pour capitale Le Caire.
+La Chine a pour capitale Pekin.
+L'Inde a pour capitale New Delhi.
+La Coree du Sud a pour capitale Seoul.
+La Russie a pour capitale Moscou.
+Les Etats-Unis ont pour capitale Washington.
+La Nouvelle-Zelande a pour capitale Wellington.
+Le mardi precede le mercredi et suit le lundi.
+Le jeudi suit le mercredi et precede le vendredi.
+Le dimanche termine la semaine et le lundi la recommence.
+Fevrier vient apres janvier. Mars vient apres fevrier.
+Mai vient apres avril. Juin vient apres mai.
+Aout vient apres juillet. Novembre vient apres octobre.
+Decembre termine l'annee civile.
+Quatre plus quatre font huit.
+Dix plus cinq font quinze.
+Treize moins six font sept.
+Vingt moins neuf font onze.
+Neuf fois quatre font trente-six.
+Trois fois neuf font vingt-sept.
+Vingt-quatre divise par six font quatre.
+Quinze divise par cinq font trois.
+Le mont Fuji se trouve au Japon.
+Big Ben se trouve a Londres.
+Le Parthenon se trouve a Athenes.
+Le Taj Mahal se trouve en Inde.
+Pablo Picasso a peint Guernica.
+Claude Monet a peint de nombreuses oeuvres impressionnistes.
+Marie Curie a mene des travaux majeurs sur la radioactivite.
+Isaac Newton a formule la loi de la gravitation universelle.
+Le mercure est une planete proche du Soleil.
+Mars est souvent appelee la planete rouge.
+Jupiter est la plus grande planete du systeme solaire.
+Saturne est connue pour ses anneaux.
+Venus est une planete rocheuse.
+Le Pacifique est plus vaste que l'Atlantique.
+L'Everest se situe dans l'Himalaya.
+L'Amazonie est une grande region forestiere d'Amerique du Sud.
+Le Sahara est un vaste desert africain.
+Un navigateur web comme Firefox ou Chrome affiche des pages web.
+Un serveur web repond a des requetes et renvoie des ressources.
+Une base de donnees relationnelle organise les informations en tables.
+Une API permet a deux logiciels d'echanger des donnees de facon structuree.
+HTTP est un protocole de communication du web.
+HTTPS ajoute une couche de chiffrement aux echanges HTTP.
+Une adresse email identifie une boite de messagerie.
+Une URL contient souvent un protocole, un domaine et un chemin.
+Le HTML structure une page web.
+Le CSS gere principalement la presentation visuelle d'une page.
+JavaScript permet d'ajouter du comportement interactif dans le navigateur.
+Linux est un systeme d'exploitation largement utilise sur les serveurs.
+Git sert a versionner le code source.
+Un commit Git enregistre un ensemble coherent de modifications.
+Une branche Git permet de travailler sur une evolution isolee.
+Les tests automatises verifient qu'un programme conserve le comportement attendu.
+Un bug est un defaut dans un logiciel.
+Deboguer consiste a identifier puis corriger un probleme.
+Un reseau local relie des machines proches.
+Le routeur dirige le trafic entre differents reseaux.
+Une sauvegarde reguliere limite l'impact des pannes.
+La memoire vive perd son contenu quand la machine s'eteint.
+Le disque stocke les donnees de maniere persistante.
+Le CPU execute des instructions generales.
+Le GPU accelere certains calculs massivement paralleles.
+Un tokenizer decoupe le texte en unites manipulables par le modele.
+Le preentrainement apprend des regularites generales du langage.
+Le fine-tuning specialise un modele sur une tache plus ciblee.
+L'evaluation doit etre separee des donnees d'entrainement.
+Un modele qui generalise bien repond correctement sur des exemples non vus.
